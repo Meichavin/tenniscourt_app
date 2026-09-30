@@ -179,9 +179,36 @@ def render_comparison(sub: pd.DataFrame, court: str, idx_a: int, idx_b: int):
         f"延長 {sign(delta_px)}{delta_px:,} px"
     )
 
+# ══ パスワード認証 ═════════════════════════════════════
+def check_password() -> bool:
+    """secrets.toml または Streamlit Cloud のシークレットで認証する"""
+    try:
+        correct = st.secrets["password"]
+    except (KeyError, FileNotFoundError):
+        # secrets未設定なら認証スキップ（ローカル開発用）
+        return True
+
+    def _verify():
+        if st.session_state.get("pw_input") == correct:
+            st.session_state["auth"] = True
+        else:
+            st.session_state["auth"] = False
+
+    if st.session_state.get("auth"):
+        return True
+
+    st.set_page_config(page_title="ログイン", layout="centered")
+    st.title("🔒 ログイン")
+    st.text_input("パスワード", type="password", key="pw_input", on_change=_verify)
+    if "auth" in st.session_state and not st.session_state["auth"]:
+        st.error("パスワードが違います")
+    st.stop()
+
+check_password()
+
 # ══ Streamlit UI ══════════════════════════════════════
 st.set_page_config(page_title="テニスコート ひび割れ監視", layout="wide")
-st.title("テニスコート ひび割れ監視システム")
+st.title("🎾 テニスコート ひび割れ監視システム")
 
 tab_analyze, tab_history, tab_trend, tab_compare = st.tabs([
     "📸 解析", "📋 履歴一覧", "📈 推移グラフ", "🔍 比較"
