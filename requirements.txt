@@ -1,6 +1,6 @@
-streamlit
-opencv-python-headless
-scikit-image
-matplotlib
-japanize-matplotlib
-numpy
+streamlit>=1.34
+opencv-python-headless>=4.9
+numpy>=1.26
+scikit-image>=0.22
+matplotlib>=3.8
+pandas>=2.2
