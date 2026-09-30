@@ -181,7 +181,7 @@ def render_comparison(sub: pd.DataFrame, court: str, idx_a: int, idx_b: int):
 
 # ══ Streamlit UI ══════════════════════════════════════
 st.set_page_config(page_title="テニスコート ひび割れ監視", layout="wide")
-st.title("🎾 テニスコート ひび割れ監視システム")
+st.title("テニスコート ひび割れ監視システム")
 
 tab_analyze, tab_history, tab_trend, tab_compare = st.tabs([
     "📸 解析", "📋 履歴一覧", "📈 推移グラフ", "🔍 比較"
